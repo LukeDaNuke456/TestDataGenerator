@@ -1,5 +1,9 @@
 import random
 
+from openpyxl import load_workbook
+
+# import workbookinitialization
+
 class Vehicle:
     
     def __init__(self, year, make, model,  mileage, price):
@@ -20,7 +24,43 @@ class Vehicle:
             return random.randint(50000, 100000)  # One year old vehicles may have higher mileage
         else:
             return random.randint(100000, 200000)  # Older vehicles may have even higher mileage
-
+        
+    def determine_cheverlet_price(self):
+        if self.year == 2024 and self.make == 'Cheverlet' and self.model == 'Silverado 1500':
+            if self.mileage in range(0,1000): 
+                return random.randint(38000, 65000)
+            elif self.mileage in range (1001, 10000):
+                return random.randint(30000, 50000)
+            elif self.mileage in range (10001, 50000):
+                return random.randint(25000, 45000)
+            elif self.mileage in range (50001, 100000):
+                return random.randint(20000, 38000)
+            elif self.mileage > 101000:
+                return random.randint(12000, 25000)
+        if self.year == 2023 and self.make == 'Cheverlet' and self.model == 'Silverado 1500':
+            if self.mileage in range(0,1000): 
+                return random.randint(38000, 65000)
+            elif self.mileage in range (1001, 10000):
+                return random.randint(30000, 50000)
+            elif self.mileage in range (10001, 50000):
+                return random.randint(25000, 45000)
+            elif self.mileage in range (50001, 100000):
+                return random.randint(20000, 38000)
+            elif self.mileage > 101000:
+                return random.randint(12000, 25000)
+        if self.year == 2022 and self.make == 'Cheverlet' and self.model == 'Silverado 1500':
+            if self.mileage in range(0,1000): 
+                return random.randint(38000, 65000)
+            elif self.mileage in range (1001, 10000):
+                return random.randint(30000, 50000)
+            elif self.mileage in range (10001, 50000):
+                return random.randint(25000, 45000)
+            elif self.mileage in range (50001, 100000):
+                return random.randint(20000, 38000)
+            elif self.mileage > 101000:
+                return random.randint(12000, 25000)
+            
+            
 def autoPopulateVehicles(num_vehicles):
     vehicles = {}
 
@@ -100,9 +140,63 @@ def setHondaModels():
 
 def setCheverletModels():
 
-    cheverletModel = ['Silverado 1500', 'Camaro', 'Impala', 'Malibu']
-    random_make_number = random.randint(0, len(cheverletModel) - 1)
-    return cheverletModel[random_make_number]
+    cheverletModels = ['Silverado 1500', 'Camaro', 'Impala', 'Malibu']
+    random_make_number = random.randint(0, len(cheverletModels) - 1)
+    return cheverletModels[random_make_number]
+
+def setModelsPricing(vehicles):
+
+    decrease_per_mile = 0.2
+    decrease_per_year = 500
+    current_year = 2024
+
+    modelsBasePrices = {
+
+        ("Cheverlet", "Silverado 1500"): 65000,
+        ("Cheverlet", "Camaro"): 45000,
+        ("Cheverlet", "Impala"): 30000, 
+        ("Cheverlet", "Malibu"): 27000, 
+
+        ("Honda", "Ridgeline"): 46000,
+        ("Honda", "Passport"): 43000,
+        ("Honda", "Civic"): 27000, 
+        ("Honda", "Accord"): 34000,  
+
+        ("Toyota", "Tundra"): 60000,
+        ("Toyota", "Tacoma"): 54000,
+        ("Toyota", "Rav4"): 33000, 
+        ("Toyota", "Camry"): 30000, 
+
+        ("Ford", "F-150"): 55000,
+        ("Ford", "F-250"): 70000,
+        ("Ford", "Ranger"): 41000, 
+        ("Ford", "Bronco"): 60000        
+
+    }
+
+    for vehicle_id, vehicle in vehicles.items():
+        
+        if (vehicle.make, vehicle.model) in modelsBasePrices: 
+
+            age = current_year - vehicle.year
+
+            print(str(age))
+
+            basePrice = modelsBasePrices[vehicle.make, vehicle.model]
+
+            adjusted_price = basePrice - (vehicle.mileage * decrease_per_mile)
+
+            adjusted_price -= age * decrease_per_year
+
+            adjusted_price = max(adjusted_price, 0)
+
+            vehicle.price = int(adjusted_price)
+        
+        else: 
+            vehicle.price = 0
+
+
+
     
 def setVehicleMiles(vehicles):
 
@@ -110,6 +204,21 @@ def setVehicleMiles(vehicles):
 
         if vehicle.mileage == 0:
             vehicle.mileage = vehicle.generate_random_mileage()
+
+
+
+ 
+def writeToWorkbook(vehicles):
+
+    existing_wb = load_workbook("vehicle_data.xlsx")
+    ws = existing_wb.active
+    header = ["ID", "Year", "Make", "Model", "Mileage", "Price"]
+    ws.append(header)
+
+    for vehicle_id, vehicle in vehicles.items():
+        ws.append([vehicle_id, vehicle.year, vehicle.make, vehicle.model, vehicle.mileage, vehicle.price])
+    
+    existing_wb.save("vehicle_data.xlsx")
 
 def main():
 
@@ -127,23 +236,26 @@ def main():
             setVehicleMake(vehicles)
             setVehicleModels(vehicles)
             setVehicleMiles(vehicles)
-            print("---------------------------------\n")
+            setModelsPricing(vehicles)
+            writeToWorkbook(vehicles)
 
-            for vehicle_id, vehicle in vehicles.items():
-                print(f"Vehicle ID: {vehicle_id}")
-                print(f"Year: {vehicle.year}")
-                print(f"Make: {vehicle.make}")
-                print(f"Model: {vehicle.model}")
-                print(f"Mileage: {vehicle.mileage} miles\n")
+            # print("---------------------------------\n")
+
+            # for vehicle_id, vehicle in vehicles.items():
+            #     print(f"Vehicle ID: {vehicle_id}")
+            #     print(f"Year: {vehicle.year}")
+            #     print(f"Make: {vehicle.make}")
+            #     print(f"Model: {vehicle.model}")
+            #     print(f"Mileage: {vehicle.mileage} miles")
+            #     print(f"Price: ${vehicle.price} \n")
             
-            print("---------------------------------\n")
+            # print("---------------------------------\n")
 
             break
 
         else: 
 
-          print("Not a number. How many vehicle's do you want in your inventory? : ")  
-
+            print("Not a number. How many vehicle's do you want in your inventory? : ")  
 
 if __name__ == "__main__":
     main()
