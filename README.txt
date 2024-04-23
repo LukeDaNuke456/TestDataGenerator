@@ -1,3 +1,18 @@
+Vehicle Data Generator 
+
+Instructions (Windows based):
+
+    1. Download this repo to your machine inside of a folder of your choosing.
+    2. Start up powershell / cmd and navigate to the folder and 'cd' into it. 
+    3. Create virtual enviornment and activate it.
+    4. Use pip to install these packages: 
+
+        a. 
+        b. 
+        c.
+
+
+Descritpion:
 This program will create Vehcile data. Each vehicle will have these attributes: 
 
     1. Vehicle ID
