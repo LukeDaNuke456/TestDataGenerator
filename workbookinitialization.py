@@ -1,12 +1,9 @@
 import os
-import createtestdata
-
 from openpyxl import Workbook
 
 wb = Workbook()
 
 filename = "vehicle_data.xlsx"
-
 
 if os.path.exists(filename):
     os.remove(filename)

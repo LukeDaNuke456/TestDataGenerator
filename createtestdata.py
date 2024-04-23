@@ -179,9 +179,7 @@ def setModelsPricing(vehicles):
         if (vehicle.make, vehicle.model) in modelsBasePrices: 
 
             age = current_year - vehicle.year
-
-            print(str(age))
-
+            
             basePrice = modelsBasePrices[vehicle.make, vehicle.model]
 
             adjusted_price = basePrice - (vehicle.mileage * decrease_per_mile)
@@ -205,9 +203,6 @@ def setVehicleMiles(vehicles):
         if vehicle.mileage == 0:
             vehicle.mileage = vehicle.generate_random_mileage()
 
-
-
- 
 def writeToWorkbook(vehicles):
 
     existing_wb = load_workbook("vehicle_data.xlsx")
@@ -238,6 +233,8 @@ def main():
             setVehicleMiles(vehicles)
             setModelsPricing(vehicles)
             writeToWorkbook(vehicles)
+
+            return vehicles
 
             # print("---------------------------------\n")
 
