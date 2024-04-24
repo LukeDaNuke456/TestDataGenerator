@@ -1,3 +1,4 @@
+# Test Data Generator
 This data generation tool creates randomized datasets for testing and development purposes, specifically useful for populating databases in web projects. It simplifies data insertion and enhances testing workflows in software development and data analysis. 
 
 ### Operation
