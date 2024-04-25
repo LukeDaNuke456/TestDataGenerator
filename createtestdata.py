@@ -215,44 +215,38 @@ def writeToWorkbook(vehicles):
     
     existing_wb.save("vehicle_data.xlsx")
 
-def main():
+def main(num_of_vehicles):
 
     while True: 
 
-        print("How many vehicle's do you want in your inventory? : ")
-        num_of_vehicles = input()
+        # print("How many vehicle's do you want in your inventory? : ")
+        # num_of_vehicles = input()
             
-        if num_of_vehicles.isdigit():
+        
 
-            num_of_vehicles = int(num_of_vehicles)
+        num_of_vehicles = int(num_of_vehicles)
 
-            vehicles = autoPopulateVehicles(num_of_vehicles)
-            setVehicleYear(vehicles)
-            setVehicleMake(vehicles)
-            setVehicleModels(vehicles)
-            setVehicleMiles(vehicles)
-            setModelsPricing(vehicles)
-            writeToWorkbook(vehicles)
+        vehicles = autoPopulateVehicles(num_of_vehicles)
+        setVehicleYear(vehicles)
+        setVehicleMake(vehicles)
+        setVehicleModels(vehicles)
+        setVehicleMiles(vehicles)
+        setModelsPricing(vehicles)
+        writeToWorkbook(vehicles)
+        
+        # print("---------------------------------\n")
 
-            return vehicles
-
-            # print("---------------------------------\n")
-
-            # for vehicle_id, vehicle in vehicles.items():
-            #     print(f"Vehicle ID: {vehicle_id}")
-            #     print(f"Year: {vehicle.year}")
-            #     print(f"Make: {vehicle.make}")
-            #     print(f"Model: {vehicle.model}")
-            #     print(f"Mileage: {vehicle.mileage} miles")
-            #     print(f"Price: ${vehicle.price} \n")
-            
-            # print("---------------------------------\n")
-
-            break
-
-        else: 
-
-            print("Not a number. How many vehicle's do you want in your inventory? : ")  
+        # for vehicle_id, vehicle in vehicles.items():
+        #     print(f"Vehicle ID: {vehicle_id}")
+        #     print(f"Year: {vehicle.year}")
+        #     print(f"Make: {vehicle.make}")
+        #     print(f"Model: {vehicle.model}")
+        #     print(f"Mileage: {vehicle.mileage} miles")
+        #     print(f"Price: ${vehicle.price} \n")
+        
+        # print("---------------------------------\n")
+        return vehicles
+        
 
 if __name__ == "__main__":
     main()
